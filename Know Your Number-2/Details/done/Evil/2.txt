@@ -1,0 +1,6 @@
+Number = xy..z
+
+Convert the Number to its Binary Equivalent
+And Count the number of 1's present in it
+
+If the number of 1's is evev ,it is a Duck Number.

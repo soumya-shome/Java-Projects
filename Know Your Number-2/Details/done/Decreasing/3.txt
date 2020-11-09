@@ -1,0 +1,8 @@
+Input:-
+	774410 
+Output:-
+	774410 is an Decreasing number 
+
+Since:-
+
+7=7>4=4>1>0

@@ -1,0 +1,5 @@
+Number= n
+
+y=n*n
+
+y contains n in the end

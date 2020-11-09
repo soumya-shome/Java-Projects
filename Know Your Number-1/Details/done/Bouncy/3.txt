@@ -1,0 +1,7 @@
+Input:-
+	155349 
+Output:-
+	155349 is a Bouncy number 
+
+Since:-
+ 1<5<5>3<4<9

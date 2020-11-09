@@ -1,0 +1,5 @@
+Number = xy..z
+
+xy..z = x^n + y^n+.....+ z^n
+
+n=number of digits

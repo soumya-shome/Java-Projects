@@ -1,0 +1,1 @@
+We shall call a positive integer that is neither increasing nor decreasing a “bouncy” number; for example, 155349. Clearly there cannot be any bouncy numbers below 100.

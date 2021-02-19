@@ -25,4 +25,8 @@ public class controller {
     public User login(String username, String password) {
         return this.db.getUser(username, password);
     }
+    
+    public String baln(String username){
+        return String.valueOf(this.db.getBalnc(username));
+    }
 }

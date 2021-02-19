@@ -10,7 +10,6 @@ public class DB {
 
     public void openConn(){
         try{
-            
             Class.forName("com.mysql.jdbc.Driver");
             this.conn=(Connection) DriverManager.getConnection("jdbc:mysql://localhost/rideara?useSSL=false","root","");
             System.out.println("Connection Established");
@@ -37,7 +36,6 @@ public class DB {
         }
     }
 
-   
     public User getUser(String userName, String password)  {
         try {
             String query = "SELECT * FROM `users` WHERE `username`='" + userName + "' AND `password`='" + password + "'";
@@ -57,6 +55,21 @@ public class DB {
             return user;
         } catch (SQLException ex) {
             return null;
+        }
+    }
+    
+    public int getBalnc(String usr){
+        try{
+            String query = "SELECT `balance` FROM `wallet` WHERE `username`='"+usr+"'";
+            Statement st = this.conn.createStatement();
+            ResultSet resultSet = st.executeQuery(query);
+            resultSet.next();
+            int balance=resultSet.getInt("balance");
+            st.close();
+            resultSet.close();
+            return balance;
+        }catch(SQLException ex){
+            return -1;
         }
     }
 }

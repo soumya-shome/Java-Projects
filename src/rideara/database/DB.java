@@ -27,6 +27,10 @@ public class DB {
             Statement statement = this.conn.createStatement();
             statement.executeUpdate(query);
             statement.close();
+            query = "INSERT INTO `wallet`(`username`, `balance`) VALUES ('"+user.getUserName()+"',0)";
+            statement = this.conn.createStatement();
+            statement.executeUpdate(query);
+            statement.close();
             return true;
         } catch (SQLException ex) {
             return false;

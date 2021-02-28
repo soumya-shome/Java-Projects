@@ -12,9 +12,8 @@ public class controller {
     }
     
     public static controller getController(){
-        if (controller==null){
+        if (controller==null)
             controller=new controller();
-        }
         return controller;
     }
 
@@ -28,5 +27,9 @@ public class controller {
     
     public String baln(String username){
         return String.valueOf(this.db.getBalnc(username));
+    }
+    
+    public Station Stations(){
+        return this.db.getStation();
     }
 }

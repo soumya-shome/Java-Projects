@@ -3,7 +3,8 @@ package rideara.database;
 import com.mysql.jdbc.Connection;
 import java.sql.*;
 import rideara.controller.User;
-
+import java.util.ArrayList;
+import rideara.controller.Station;
 
 public class DB {
     private Connection conn;
@@ -72,4 +73,48 @@ public class DB {
             return -1;
         }
     }
-}
+    
+    public int GetSize(){
+        try{
+            Statement st = this.conn.createStatement();
+            ResultSet count = st.executeQuery("SELECT COUNT(*) FROM `stations`");
+            count.next();
+            int size=count.getInt("COUNT(*)");
+            count.close();
+            st.close();            
+            return size;
+        }catch(SQLException ex){
+             return -1;
+        }
+    }
+    
+    public Station getStation(){
+        try{
+            
+            String query = "SELECT * FROM `stations`";
+            Statement st = this.conn.createStatement();
+            ResultSet resultSet = st.executeQuery(query);
+            int size=GetSize();
+            System.out.println(size);
+            Station stat=null;
+            if(size>0){
+                stat=new Station();
+                stat.setSi(size);
+                while(resultSet.next()){
+                    stat.setStation(resultSet.getString("name"));
+                    stat.setSID(resultSet.getString("b_id"));
+                    stat.setCapacity(resultSet.getInt("capacity"));
+                    stat.setAvail(resultSet.getInt("bike_avail"));
+                    stat.incre();
+                }
+            }
+            st.close();
+            resultSet.close();
+            
+            return stat;
+        }catch(SQLException ex){
+            System.out.println("Here");
+             return null;
+        }
+    }
+} 

@@ -23,7 +23,7 @@ ResultSet rs=null;
     }
    public boolean checkLogin(String username,String password)
    {
-       String sql="select * from registration where username='"+username+"' and password='"+password+"'";
+       String sql="select * from registration where username='"+username+"' and password='"+password+"';";
        boolean flag=false;
        try
 		{

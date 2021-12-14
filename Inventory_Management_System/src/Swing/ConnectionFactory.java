@@ -17,15 +17,17 @@ public Connection getConn()
 	try
 	{
 		Class.forName("oracle.jdbc.driver.OracleDriver");//REGISTER AND LOAD THE JDBC DRIVER
-		cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","b22","b22");//ESTABLISH THE CONNECTION
+		cn=DriverManager.getConnection("jdbc:oracle:oci:@localhost:1521:xe","b22","b22");//ESTABLISH THE CONNECTION
 		
 	}
 	catch(ClassNotFoundException ce)
 	{
+            System.out.println("Error !!!!!");
 		ce.printStackTrace();
 	}
 	catch(SQLException se)
 	{
+            System.out.println("SQL Error !!!");
 		se.printStackTrace();
 	}
 	return cn;

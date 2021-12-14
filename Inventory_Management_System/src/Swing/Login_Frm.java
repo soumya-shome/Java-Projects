@@ -23,16 +23,16 @@ ResultSet rs=null;
     }
    public boolean checkLogin(String username,String password)
    {
-       String sql="select * from registration where username='"+username+"' and password='"+password+"';";
+       String sql="select * from registration where username='"+username+"' and password='"+password+"'";
        boolean flag=false;
        try
 		{
 		
 			ConnectionFactory con=new ConnectionFactory();
 			cn=con.getConn();
-		  st=cn.createStatement();//CREATE THE STATEMENT
-		  rs=st.executeQuery(sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
-		  if(rs.next())
+                        st=cn.createStatement();//CREATE THE STATEMENT
+                        rs=st.executeQuery(sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
+                  if(rs.next())
                   {
                       flag=true;
                   }

@@ -3,47 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SWING;
+package sample;
 
 /**
  *
  * @author ARINDAM
  */
-import java.sql.*;
-import net.proteanit.sql.DbUtils;
-public class Login_Frm extends javax.swing.JFrame {
-Connection cn=null;
-Statement st=null;
-ResultSet rs=null;
+public class Login_Frm_1 extends javax.swing.JFrame {
+
     /**
      * Creates new form Login_Frm
      */
-    public Login_Frm() {
+    public Login_Frm_1() {
         initComponents();
     }
-   public boolean checkLogin(String username,String password)
+   public void checkLogin(String username,String password)
    {
-       String sql="select * from registration where username='"+username+"' and password='"+password+"'";
-       boolean flag=false;
-       try
-		{
-		
-			ConnectionFactory con=new ConnectionFactory();
-			cn=con.getConn();
-                        st=cn.createStatement();//CREATE THE STATEMENT
-                        rs=st.executeQuery(sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
-                  if(rs.next())
-                  {
-                      flag=true;
-                  }
-		}
-		
-		catch(SQLException se)
-		{
-			se.printStackTrace();
-		}
-       return flag;
-      
+       if(username.equals("admin")&&password.equals("admin"))
+       {
+           new Admin_Menu_Frm().setVisible(true);
+       }
+       else
+       {
+           new Login_Error_Frm().setVisible(true);
+       }
    }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,7 +43,7 @@ ResultSet rs=null;
         password_txt = new javax.swing.JPasswordField();
         login_button = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("USERNAME");
 
@@ -109,29 +92,14 @@ ResultSet rs=null;
                 .addContainerGap(167, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 416, 339);
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void login_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_buttonActionPerformed
         // TODO add your handling code here:
         String username=username_txt.getText();
         String password=password_txt.getText();
-        if(username.equals("admin")&&password.equals("admin"))
-       {
-           new Admin_Menu_Frm().setVisible(true);
-       }
-        else
-        {
-            boolean flag=this.checkLogin(username, password);
-            if(flag==true)
-            {
-                new Client_Menu_Frm().setVisible(true);
-            }
-            else
-            {
-                new Login_Error_Frm().setVisible(true);
-            }
-        }
+        this.checkLogin(username, password);
     }//GEN-LAST:event_login_buttonActionPerformed
 
     /**
@@ -151,20 +119,21 @@ ResultSet rs=null;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login_Frm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_Frm_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login_Frm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_Frm_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login_Frm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_Frm_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login_Frm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login_Frm_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login_Frm().setVisible(true);
+                new Login_Frm_1().setVisible(true);
             }
         });
     }

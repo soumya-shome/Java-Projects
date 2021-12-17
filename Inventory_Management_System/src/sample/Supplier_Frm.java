@@ -16,7 +16,7 @@ Connection cn=null;
 Statement st=null;
 PreparedStatement ps=null;
 ResultSet rs=null;
-String select_sql="select * from supplier order by suppid";
+String select_sql="select * from supplier order by s_id";
 String insert_sql="insert into supplier values(?,?,?,?)";
 String delete_sql="delete from supplier where suppid=?";
 String update_sql="update supplier set phno=?,email=? where suppid=?";
@@ -34,28 +34,27 @@ String update_sql="update supplier set phno=?,email=? where suppid=?";
      */
      public void insertData()
 	{
-		try
-		{
-		  
-			ConnectionFactory con=new ConnectionFactory();
-			cn=con.getConn();
-			ps=cn.prepareStatement(insert_sql);
-		       ps.setString(1,suppid_txt.getText());
-		         ps.setString(2,suppnm_txt.getText());
-		        ps.setString(3,phno_txt.getText());
-		          ps.setString(4,email_txt.getText());
-		      	        ps.executeUpdate();
-		       cn.commit();
-		}
-		/*catch(ClassNotFoundException ce)
-		{
-			ce.printStackTrace();
-		}*/
-		catch(SQLException se)
-		{
-			se.printStackTrace();
-		}
-	}
+	try
+	{
+	ConnectionFactory con=new ConnectionFactory();
+	cn=con.getConn();
+	ps=cn.prepareStatement(insert_sql);
+	ps.setString(1,suppid_txt.getText());
+	ps.setString(2,suppnm_txt.getText());
+	ps.setString(3,phno_txt.getText());
+	ps.setString(4,email_txt.getText());
+	ps.executeUpdate();
+	cn.commit();
+        }
+	/*catch(ClassNotFoundException ce)
+	{
+		ce.printStackTrace();
+	}*/
+	catch(SQLException se)
+	{
+        se.printStackTrace();
+        }
+}
      public void getData()
 	{
 		try

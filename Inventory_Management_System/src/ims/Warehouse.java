@@ -45,6 +45,8 @@ public class Warehouse extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(530, 300));
+        setResizable(false);
 
         jButton1.setText("Save");
 

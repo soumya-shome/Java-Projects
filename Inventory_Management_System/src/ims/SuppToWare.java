@@ -45,6 +45,8 @@ public class SuppToWare extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(530, 300));
+        setResizable(false);
 
         jButton1.setText("Save");
 

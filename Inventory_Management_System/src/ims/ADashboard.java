@@ -16,6 +16,7 @@ public class ADashboard extends javax.swing.JFrame {
      */
     public ADashboard() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -31,35 +32,35 @@ public class ADashboard extends javax.swing.JFrame {
         MProduct = new javax.swing.JMenu();
         MSupplier = new javax.swing.JMenu();
         MWarehouse = new javax.swing.JMenu();
-        s_t_w = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         Showroom = new javax.swing.JMenu();
         w_t_s = new javax.swing.JMenuItem();
         close = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setResizable(false);
 
         MProduct.setText("Product");
-        MProduct.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                MProductMenuSelected(evt);
+        MProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MProductMouseClicked(evt);
             }
         });
-        
-        
         jMenuBar1.add(MProduct);
 
         MSupplier.setText("Supplier");
+        MSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MSupplierMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(MSupplier);
 
         MWarehouse.setText("Warehouse");
 
-        s_t_w.setText("Supplier to Warehouse");
-        
-        MWarehouse.add(s_t_w);
+        jMenuItem1.setText("Supplier to Warehouse");
+        MWarehouse.add(jMenuItem1);
 
         jMenuBar1.add(MWarehouse);
 
@@ -79,7 +80,7 @@ public class ADashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 531, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,10 +90,15 @@ public class ADashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MProductMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_MProductMenuSelected
+    private void MProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MProductMouseClicked
         dispose();
         new Product().setVisible(true);
-    }//GEN-LAST:event_MProductMenuSelected
+    }//GEN-LAST:event_MProductMouseClicked
+
+    private void MSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MSupplierMouseClicked
+        dispose();
+        new Supplier().setVisible(true);
+    }//GEN-LAST:event_MSupplierMouseClicked
 
     /**
      * @param args the command line arguments
@@ -137,7 +143,7 @@ public class ADashboard extends javax.swing.JFrame {
     private javax.swing.JMenu Showroom;
     private javax.swing.JMenu close;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem s_t_w;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem w_t_s;
     // End of variables declaration//GEN-END:variables
 }

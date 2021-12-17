@@ -39,6 +39,17 @@ public class ADashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         MProduct.setText("Product");
+        MProduct.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                MProductMenuSelected(evt);
+            }
+        });
+        
+        
         jMenuBar1.add(MProduct);
 
         MSupplier.setText("Supplier");
@@ -47,11 +58,7 @@ public class ADashboard extends javax.swing.JFrame {
         MWarehouse.setText("Warehouse");
 
         s_t_w.setText("Supplier to Warehouse");
-        s_t_w.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                s_t_wActionPerformed(evt);
-            }
-        });
+        
         MWarehouse.add(s_t_w);
 
         jMenuBar1.add(MWarehouse);
@@ -82,9 +89,10 @@ public class ADashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void s_t_wActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_t_wActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_s_t_wActionPerformed
+    private void MProductMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_MProductMenuSelected
+        dispose();
+        new Product().setVisible(true);
+    }//GEN-LAST:event_MProductMenuSelected
 
     /**
      * @param args the command line arguments

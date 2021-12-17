@@ -7,7 +7,7 @@ public class Conn {
     Connection cn=null;
     Statement st=null;
     ResultSet rs=null;
-    public void openConn()
+    public Conn()
     {
 	try
 	{

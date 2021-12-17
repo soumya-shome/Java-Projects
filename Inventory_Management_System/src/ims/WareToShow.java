@@ -72,7 +72,7 @@ public class WareToShow extends javax.swing.JFrame {
         jButton1.setText("Save");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Supplier to Warehouse :");
+        jLabel5.setText("Warehouse to Showroom :");
 
         jLabel1.setText("Warehouse ID :");
 

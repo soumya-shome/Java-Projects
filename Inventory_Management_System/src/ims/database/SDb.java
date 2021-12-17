@@ -4,12 +4,12 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
-public class Conn {
+public class SDb {
     Connection cn=null;
     Statement st=null;
     ResultSet rs=null;
     PreparedStatement ps=null;
-    public Conn()
+    public SDb()
     {
 	try
 	{
@@ -20,22 +20,6 @@ public class Conn {
 	}catch(SQLException se){
             se.printStackTrace();
 	}
-    }
-    
-    public boolean checkLogin(String username,String password)
-    {
-        String sql="select * from registration where username='"+username+"' and password='"+password+"'";
-        boolean flag=false;
-        try{
-            st=this.cn.createStatement();//CREATE THE STATEMENT
-            rs=st.executeQuery(sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
-            if(rs.next()){
-                flag=true;
-            }
-        }catch(SQLException se){
-            se.printStackTrace();
-        }
-        return flag;
     }
     
     public void saveSupp(String sid,String sname,String sph,String email)

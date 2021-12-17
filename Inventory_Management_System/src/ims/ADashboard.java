@@ -28,18 +28,22 @@ public class ADashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         MProduct = new javax.swing.JMenu();
         MSupplier = new javax.swing.JMenu();
         MWarehouse = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         Showroom = new javax.swing.JMenu();
-        w_t_s = new javax.swing.JMenuItem();
         close = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setResizable(false);
+
+        jButton1.setText("Supplier to Warehouse");
+
+        jButton2.setText("Warehouse to Showroom");
 
         MProduct.setText("Product");
         MProduct.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -58,17 +62,14 @@ public class ADashboard extends javax.swing.JFrame {
         jMenuBar1.add(MSupplier);
 
         MWarehouse.setText("Warehouse");
-
-        jMenuItem1.setText("Supplier to Warehouse");
-        MWarehouse.add(jMenuItem1);
-
+        MWarehouse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MWarehouseMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(MWarehouse);
 
         Showroom.setText("Showroom");
-
-        w_t_s.setText("Warehouse to Showroom");
-        Showroom.add(w_t_s);
-
         jMenuBar1.add(Showroom);
 
         close.setText("Close");
@@ -80,11 +81,21 @@ public class ADashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 531, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(368, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap(215, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,6 +110,11 @@ public class ADashboard extends javax.swing.JFrame {
         dispose();
         new Supplier().setVisible(true);
     }//GEN-LAST:event_MSupplierMouseClicked
+
+    private void MWarehouseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MWarehouseMouseClicked
+        dispose();
+        new Warehouse().setVisible(true);
+    }//GEN-LAST:event_MWarehouseMouseClicked
 
     /**
      * @param args the command line arguments
@@ -142,8 +158,8 @@ public class ADashboard extends javax.swing.JFrame {
     private javax.swing.JMenu MWarehouse;
     private javax.swing.JMenu Showroom;
     private javax.swing.JMenu close;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem w_t_s;
     // End of variables declaration//GEN-END:variables
 }

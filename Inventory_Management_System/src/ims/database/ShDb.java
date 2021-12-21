@@ -24,7 +24,7 @@ public class ShDb {
     
     public void saveShow(String sid,String sname,String sph,String email)
     {
-        String insert_sql="insert into supplier values(?,?,?,?)";
+        String insert_sql="insert into showroom values(?,?,?,?)";
         try{
             
             ps=cn.prepareStatement(insert_sql);
@@ -45,7 +45,7 @@ public class ShDb {
       {
         try
         {
-            String select_sql="select * from supplier order by s_id";
+            String select_sql="select * from showroom order by sh_id";
             st=cn.createStatement();//CREATE THE STATEMENT
             rs=st.executeQuery(select_sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
             return rs;
@@ -62,7 +62,7 @@ public class ShDb {
     {
         try
 	{
-            String delete_sql="delete from supplier where s_id=?";
+            String delete_sql="delete from showroom where sh_id=?";
             ps=cn.prepareStatement(delete_sql);
             ps.setString(1,sid);
             ps.executeUpdate();
@@ -80,7 +80,7 @@ public class ShDb {
     {
     	try
     	{
-            String update_sql="update supplier set name=?,ph_no=?,email=? where s_id=?";
+            String update_sql="update showroom set name=?,ph_no=?,email=? where sh_id=?";
             ps=cn.prepareStatement(update_sql);
             ps.setString(1,sid);
             ps.setString(2,sname);

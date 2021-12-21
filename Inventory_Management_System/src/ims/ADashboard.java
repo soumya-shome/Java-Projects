@@ -28,8 +28,8 @@ public class ADashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        bStW = new javax.swing.JButton();
+        bWtSh = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         MProduct = new javax.swing.JMenu();
         MSupplier = new javax.swing.JMenu();
@@ -41,9 +41,19 @@ public class ADashboard extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setResizable(false);
 
-        jButton1.setText("Supplier to Warehouse");
+        bStW.setText("Supplier to Warehouse");
+        bStW.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bStWActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Warehouse to Showroom");
+        bWtSh.setText("Warehouse to Showroom");
+        bWtSh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bWtShActionPerformed(evt);
+            }
+        });
 
         MProduct.setText("Product");
         MProduct.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -70,6 +80,11 @@ public class ADashboard extends javax.swing.JFrame {
         jMenuBar1.add(MWarehouse);
 
         Showroom.setText("Showroom");
+        Showroom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ShowroomMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(Showroom);
 
         close.setText("Close");
@@ -84,17 +99,17 @@ public class ADashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bStW, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bWtSh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(368, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(bStW)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(bWtSh)
                 .addContainerGap(215, Short.MAX_VALUE))
         );
 
@@ -115,6 +130,21 @@ public class ADashboard extends javax.swing.JFrame {
         dispose();
         new Warehouse().setVisible(true);
     }//GEN-LAST:event_MWarehouseMouseClicked
+
+    private void ShowroomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowroomMouseClicked
+        dispose();
+        new Showroom().setVisible(true);
+    }//GEN-LAST:event_ShowroomMouseClicked
+
+    private void bStWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bStWActionPerformed
+        dispose();
+        new SuppToWare().setVisible(true);
+    }//GEN-LAST:event_bStWActionPerformed
+
+    private void bWtShActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bWtShActionPerformed
+        dispose();
+        new WareToShow().setVisible(true);
+    }//GEN-LAST:event_bWtShActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,9 +187,9 @@ public class ADashboard extends javax.swing.JFrame {
     private javax.swing.JMenu MSupplier;
     private javax.swing.JMenu MWarehouse;
     private javax.swing.JMenu Showroom;
+    private javax.swing.JButton bStW;
+    private javax.swing.JButton bWtSh;
     private javax.swing.JMenu close;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }

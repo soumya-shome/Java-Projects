@@ -16,6 +16,7 @@ public class WareToShow extends javax.swing.JFrame {
      */
     public WareToShow() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -30,7 +31,7 @@ public class WareToShow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        bclose = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -54,7 +55,12 @@ public class WareToShow extends javax.swing.JFrame {
 
         jLabel4.setText("Showroom ID :");
 
-        jButton5.setText("Close");
+        bclose.setText("Close");
+        bclose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bcloseActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,7 +120,7 @@ public class WareToShow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(bclose)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -151,12 +157,17 @@ public class WareToShow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(bclose))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bcloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcloseActionPerformed
+        dispose();
+        new ADashboard().setVisible(true);
+    }//GEN-LAST:event_bcloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,9 +205,9 @@ public class WareToShow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bclose;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

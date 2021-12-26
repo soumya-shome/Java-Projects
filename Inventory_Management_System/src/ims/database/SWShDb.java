@@ -22,25 +22,6 @@ public class SWShDb {
 	}
     }
     
-    public void saveS2W(String sid,String pid,String pqty,String wid,String rdate)
-    {
-        System.out.println(rdate);
-        String insert_sql="insert into stow values(?,?,?,?,?)";
-        try{
-            ps=cn.prepareStatement(insert_sql);
-            ps.setString(1,sid);
-            ps.setString(2,pid);
-            ps.setString(3,pqty);
-            ps.setString(4,wid);
-            ps.setString(5,rdate);
-            ps.executeUpdate();
-            cn.commit();
-            JOptionPane.showMessageDialog(null, "Data Inserted !!","Success", JOptionPane.WARNING_MESSAGE);
-        }catch(SQLException se){
-            JOptionPane.showMessageDialog(null, "Cannot Be Added !!","Error", JOptionPane.WARNING_MESSAGE);
-        }
-    }
-    
     public ResultSet getSID()
       {
         try
@@ -120,42 +101,120 @@ public class SWShDb {
 	}
     }
     
-    
-    
-    public void deleteWare(String sid)
+    public ResultSet getW2Sh()
     {
         try
-	{
-            String delete_sql="delete from warehouse where w_id=?";
-            ps=cn.prepareStatement(delete_sql);
-            ps.setString(1,sid);
-            ps.executeUpdate();
-            cn.commit();
-            JOptionPane.showMessageDialog(null, "Data Deleted !!","Success", JOptionPane.WARNING_MESSAGE);
+        {
+            String select_sql="select * from wtosh order by d_date";
+            st=cn.createStatement();
+            rs=st.executeQuery(select_sql);
+            return rs;
         }
 	catch(SQLException se)
         {
-            JOptionPane.showMessageDialog(null, "Something Went Wrong !!","Error", JOptionPane.WARNING_MESSAGE);
-            se.printStackTrace();
+            return null;
 	}
     }
     
-    public void updateWare(String sid,String sname,String sph,String email)
+    public void saveS2W(String sid,String pid,String pqty,String wid,String rdate)
     {
-    	try
-    	{
-            String update_sql="update warehouse set name=?,ph_no=?,email=? where w_id=?";
-            ps=cn.prepareStatement(update_sql);
+        String insert_sql="insert into stow values(?,?,?,?,?)";
+        try{
+            if(this.checkStock(wid,pid)){
+                this.updateWStock(pqty,wid,pid);
+            }
+            else
+            {
+                this.addStock(wid,pid,pqty);
+            }
+            ps=cn.prepareStatement(insert_sql);
             ps.setString(1,sid);
-            ps.setString(2,sname);
-            ps.setString(3,sph);
-            ps.setString(4,email);
+            ps.setString(2,pid);
+            ps.setString(3,pqty);
+            ps.setString(4,wid);
+            ps.setString(5,rdate);
             ps.executeUpdate();
             cn.commit();
-            JOptionPane.showMessageDialog(null, "Data Updated !!","Success", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Data Inserted !!","Success", JOptionPane.WARNING_MESSAGE);
         }catch(SQLException se){
-            JOptionPane.showMessageDialog(null, "Something Went Wrong !!","Error", JOptionPane.WARNING_MESSAGE);
-            se.printStackTrace();
-	}
+            JOptionPane.showMessageDialog(null, "Cannot Be Added !!","Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    public void saveW2Sh(String wid,String pid,String pqty,String shid,String ddate)
+    {
+        String insert_sql="insert into wtosh values(?,?,?,?,?)";
+        try{
+            if(this.checkStock(wid,pid)){
+                this.updateWStock(pqty,wid,pid);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Data Inserted !!","Success", JOptionPane.WARNING_MESSAGE);
+            }
+            ps=cn.prepareStatement(insert_sql);
+            ps.setString(1,wid);
+            ps.setString(2,pid);
+            ps.setString(3,pqty);
+            ps.setString(4,shid);
+            ps.setString(5,ddate);
+            ps.executeUpdate();
+            cn.commit();
+            JOptionPane.showMessageDialog(null, "Data Inserted !!","Success", JOptionPane.WARNING_MESSAGE);
+        }catch(SQLException se){
+            JOptionPane.showMessageDialog(null, "Cannot Be Added !!","Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    public void updateWStock(String qty,String wid,String pid)
+    {
+        String insert_sql=" update wstock set qty=qty+to_number(?) where w_id=? and p_id=?";
+        try{
+            ps=cn.prepareStatement(insert_sql);
+            ps.setString(1,qty);
+            ps.setString(2,wid);
+            ps.setString(3,pid);
+            ps.executeUpdate();
+            cn.commit();
+        }catch(SQLException se){
+            System.out.println("Update Error");
+        }
+    }
+    
+    public void addStock(String wid,String pid,String pqty)
+    {
+        String insert_sql="insert into wstock values(?,?,?)";
+        try{
+            ps=cn.prepareStatement(insert_sql);
+            ps.setString(1,wid);
+            ps.setString(2,pid);
+            ps.setString(3,pqty);
+            ps.executeUpdate();
+            cn.commit();
+        }catch(SQLException se){
+            System.out.println("Add Error");
+        }
+    }
+    
+    public boolean checkStock(String wid,String pid)
+    {
+        try
+        {
+            String select_sql="select count(*) as count from wstock where w_id=? and p_id=?";
+            ps=cn.prepareStatement(select_sql);
+            ps.setString(1,wid);
+            ps.setString(2,pid);
+            rs=ps.executeQuery();
+            int count=0;
+            while(rs.next())
+                count=Integer.parseInt(rs.getString("count"));
+            System.out.println(count);
+            if(count != 0)
+                return true;
+        }catch(SQLException se){
+            System.out.println("ERROR");
+            return false;
+        }
+        return false;
     }
 }

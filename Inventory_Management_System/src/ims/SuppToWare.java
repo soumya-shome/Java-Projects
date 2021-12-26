@@ -4,7 +4,6 @@ import ims.database.SWShDb;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.proteanit.sql.DbUtils;
@@ -65,14 +64,7 @@ public class SuppToWare extends javax.swing.JFrame {
         ob=new SWShDb();
         addSID();
         addWID();
-        addPID();
-        System.out.println(this.sid);
-        System.out.println(this.sname);
-        System.out.println(this.pid);
-        System.out.println(this.pname);
-        System.out.println(this.wid);
-        System.out.println(this.wname);
-        
+        addPID();  
     }
     
     
@@ -133,13 +125,13 @@ public class SuppToWare extends javax.swing.JFrame {
 
         ttable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(ttable);
@@ -229,16 +221,14 @@ public class SuppToWare extends javax.swing.JFrame {
     }//GEN-LAST:event_bcloseActionPerformed
 
     private void bsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsaveActionPerformed
-        String sid=this.sid.get(Collections.binarySearch(sname,tsid.getSelectedItem().toString()));
-        //System.out.println(sid);
-        String pid=this.pid.get(Collections.binarySearch(pname,tpid.getSelectedItem().toString()));
-        String pqty=tpq.getText();
-        String wid=this.wid.get(Collections.binarySearch(wname,twid.getSelectedItem().toString()));
+        String s_id=this.sid.get(sname.indexOf(tsid.getSelectedItem().toString()));
+        String p_id=this.pid.get(pname.indexOf(tpid.getSelectedItem().toString()));
+        String p_qty=tpq.getText();
+        String w_id=this.wid.get(wname.indexOf(twid.getSelectedItem().toString()));
         SimpleDateFormat sd=new SimpleDateFormat("dd-MMM-yyyy");
         String ddate=sd.format(tdate.getDate());
-        ob.saveS2W(wid,pid,pqty,wid,ddate);
+        ob.saveS2W(s_id,p_id,p_qty,w_id,ddate);
         ttable.setModel(DbUtils.resultSetToTableModel(ob.getS2W()));
-        //this.clear();
     }//GEN-LAST:event_bsaveActionPerformed
 
     private void bshowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bshowActionPerformed

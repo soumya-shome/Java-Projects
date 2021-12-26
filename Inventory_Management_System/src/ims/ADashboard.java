@@ -16,6 +16,7 @@ public class ADashboard extends javax.swing.JFrame {
      */
     public ADashboard() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -27,40 +28,63 @@ public class ADashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bStW = new javax.swing.JButton();
+        bWtSh = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         MProduct = new javax.swing.JMenu();
         MSupplier = new javax.swing.JMenu();
         MWarehouse = new javax.swing.JMenu();
-        s_t_w = new javax.swing.JMenuItem();
         Showroom = new javax.swing.JMenu();
-        w_t_s = new javax.swing.JMenuItem();
         close = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setResizable(false);
+
+        bStW.setText("Supplier to Warehouse");
+        bStW.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bStWActionPerformed(evt);
+            }
+        });
+
+        bWtSh.setText("Warehouse to Showroom");
+        bWtSh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bWtShActionPerformed(evt);
+            }
+        });
 
         MProduct.setText("Product");
+        MProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MProductMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(MProduct);
 
         MSupplier.setText("Supplier");
+        MSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MSupplierMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(MSupplier);
 
         MWarehouse.setText("Warehouse");
-
-        s_t_w.setText("Supplier to Warehouse");
-        s_t_w.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                s_t_wActionPerformed(evt);
+        MWarehouse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MWarehouseMouseClicked(evt);
             }
         });
-        MWarehouse.add(s_t_w);
-
         jMenuBar1.add(MWarehouse);
 
         Showroom.setText("Showroom");
-
-        w_t_s.setText("Warehouse to Showroom");
-        Showroom.add(w_t_s);
-
+        Showroom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ShowroomMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(Showroom);
 
         close.setText("Close");
@@ -72,19 +96,55 @@ public class ADashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bStW, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bWtSh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(368, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bStW)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bWtSh)
+                .addContainerGap(215, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void s_t_wActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_t_wActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_s_t_wActionPerformed
+    private void MProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MProductMouseClicked
+        dispose();
+        new Product().setVisible(true);
+    }//GEN-LAST:event_MProductMouseClicked
+
+    private void MSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MSupplierMouseClicked
+        dispose();
+        new Supplier().setVisible(true);
+    }//GEN-LAST:event_MSupplierMouseClicked
+
+    private void MWarehouseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MWarehouseMouseClicked
+        dispose();
+        new Warehouse().setVisible(true);
+    }//GEN-LAST:event_MWarehouseMouseClicked
+
+    private void ShowroomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowroomMouseClicked
+        dispose();
+        new Showroom().setVisible(true);
+    }//GEN-LAST:event_ShowroomMouseClicked
+
+    private void bStWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bStWActionPerformed
+        dispose();
+        new SuppToWare().setVisible(true);
+    }//GEN-LAST:event_bStWActionPerformed
+
+    private void bWtShActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bWtShActionPerformed
+        dispose();
+        new WareToShow().setVisible(true);
+    }//GEN-LAST:event_bWtShActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,9 +187,9 @@ public class ADashboard extends javax.swing.JFrame {
     private javax.swing.JMenu MSupplier;
     private javax.swing.JMenu MWarehouse;
     private javax.swing.JMenu Showroom;
+    private javax.swing.JButton bStW;
+    private javax.swing.JButton bWtSh;
     private javax.swing.JMenu close;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem s_t_w;
-    private javax.swing.JMenuItem w_t_s;
     // End of variables declaration//GEN-END:variables
 }

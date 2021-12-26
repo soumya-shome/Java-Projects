@@ -27,7 +27,7 @@ public class Product extends javax.swing.JFrame {
         t_pprice = new javax.swing.JTextField();
         t_pmodel = new javax.swing.JTextField();
         bsave = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        bupdate = new javax.swing.JButton();
         bdelete = new javax.swing.JButton();
         bshow = new javax.swing.JButton();
         bclose = new javax.swing.JButton();
@@ -53,7 +53,12 @@ public class Product extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Update");
+        bupdate.setText("Update");
+        bupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bupdateActionPerformed(evt);
+            }
+        });
 
         bdelete.setText("Delete");
         bdelete.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +122,7 @@ public class Product extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(bsave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
+                                .addComponent(bupdate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bdelete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,7 +179,7 @@ public class Product extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bsave)
-                    .addComponent(jButton2)
+                    .addComponent(bupdate)
                     .addComponent(bdelete)
                     .addComponent(bshow)
                     .addComponent(bclose))
@@ -211,6 +216,17 @@ public class Product extends javax.swing.JFrame {
         dispose();
         new ADashboard().setVisible(true);
     }//GEN-LAST:event_bcloseActionPerformed
+
+    private void bupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bupdateActionPerformed
+        String pid=t_pid.getText();
+        String pname=t_pname.getText();
+        String pmodel=t_pmodel.getText();
+        String pprice=t_pprice.getText();
+        String pcolor=t_pcolor.getSelectedItem().toString();
+        ob.updateProd(pid,pname,pprice,pmodel,pcolor);
+        ptable.setModel(DbUtils.resultSetToTableModel(ob.getProd()));
+        this.clear();
+    }//GEN-LAST:event_bupdateActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -249,7 +265,7 @@ public class Product extends javax.swing.JFrame {
     private javax.swing.JButton bdelete;
     private javax.swing.JButton bsave;
     private javax.swing.JButton bshow;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton bupdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

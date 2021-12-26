@@ -62,7 +62,7 @@ public class PDb {
     {
         try
 	{
-            String delete_sql="delete from product where pid=?";
+            String delete_sql="delete from product where p_id=?";
             ps=cn.prepareStatement(delete_sql);
             ps.setString(1,pid);
             ps.executeUpdate();
@@ -80,13 +80,14 @@ public class PDb {
     {
     	try
     	{
-            String update_sql="update product set name=?,price=?,model=?,color=? where pid=?";
+            String update_sql="update product set name=?,price=?,model=?,color=? where p_id=?";
             ps=cn.prepareStatement(update_sql);
-            ps.setString(1,pid);
-            ps.setString(2,pname);
-            ps.setString(3,pprice);
-            ps.setString(4,pmodel);
-            ps.setString(5,pcolor);
+            ps.setString(5,pid);
+            ps.setString(1,pname);
+            ps.setString(2,pprice);
+            ps.setString(3,pmodel);
+            ps.setString(4,pcolor);
+            System.out.println(ps);
             ps.executeUpdate();
             cn.commit();
             JOptionPane.showMessageDialog(null, "Data Updated !!","Success", JOptionPane.WARNING_MESSAGE);

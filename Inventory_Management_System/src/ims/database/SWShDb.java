@@ -15,10 +15,8 @@ public class SWShDb {
 	{
             Class.forName("oracle.jdbc.driver.OracleDriver");//REGISTER AND LOAD THE JDBC DRIVER
             this.cn=DriverManager.getConnection("jdbc:oracle:oci:@localhost:1521:xe","b22","b22");//ESTABLISH THE CONNECTION	
-	}catch(ClassNotFoundException ce){
+	}catch(ClassNotFoundException | SQLException ce){
             ce.printStackTrace();
-	}catch(SQLException se){
-            se.printStackTrace();
 	}
     }
     
@@ -121,7 +119,7 @@ public class SWShDb {
         String insert_sql="insert into stow values(?,?,?,?,?)";
         try{
             if(this.checkStock(wid,pid)){
-                this.updateWStock(pqty,wid,pid);
+                this.updateWStock(pqty,wid,pid,0);
             }
             else
             {
@@ -146,11 +144,7 @@ public class SWShDb {
         String insert_sql="insert into wtosh values(?,?,?,?,?)";
         try{
             if(this.checkStock(wid,pid)){
-                this.updateWStock(pqty,wid,pid);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Data Inserted !!","Success", JOptionPane.WARNING_MESSAGE);
+                this.updateWStock(pqty,wid,pid,1);
             }
             ps=cn.prepareStatement(insert_sql);
             ps.setString(1,wid);
@@ -162,13 +156,19 @@ public class SWShDb {
             cn.commit();
             JOptionPane.showMessageDialog(null, "Data Inserted !!","Success", JOptionPane.WARNING_MESSAGE);
         }catch(SQLException se){
+            System.out.println(se);
             JOptionPane.showMessageDialog(null, "Cannot Be Added !!","Error", JOptionPane.WARNING_MESSAGE);
         }
     }
     
-    public void updateWStock(String qty,String wid,String pid)
+    public void updateWStock(String qty,String wid,String pid,int ch)
     {
-        String insert_sql=" update wstock set qty=qty+to_number(?) where w_id=? and p_id=?";
+        
+        String insert_sql="";
+        if(ch==0)
+            insert_sql="update wstock set qty=qty+to_number(?) where w_id=? and p_id=?";
+        else if(ch==1)
+            insert_sql="update wstock set qty=qty-to_number(?) where w_id=? and p_id=?";
         try{
             ps=cn.prepareStatement(insert_sql);
             ps.setString(1,qty);
@@ -216,5 +216,24 @@ public class SWShDb {
             return false;
         }
         return false;
+    }
+    
+    public String getCount(String wid,String pid){
+        try
+        {
+            String select_sql="select qty from wstock where w_id=? and p_id=?";
+            ps=cn.prepareStatement(select_sql);
+            ps.setString(1,wid);
+            ps.setString(2,pid);
+            rs=ps.executeQuery();
+            String count="0";
+            while(rs.next())
+                count=rs.getString("qty");
+            //System.out.println(count);
+            return count;
+        }catch(SQLException se){
+            System.out.println("ERROR");
+            return "0";
+        }
     }
 }

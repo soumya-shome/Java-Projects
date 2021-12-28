@@ -7,13 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 public class WareToShow extends javax.swing.JFrame {
 
-    
     SWShDb ob;
     ResultSet rs=null;
     ArrayList<String> shid= new ArrayList<>();
@@ -61,7 +60,13 @@ public class WareToShow extends javax.swing.JFrame {
             Logger.getLogger(SuppToWare.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    SpinnerModel model = new SpinnerNumberModel(0, 0, 10, 1);
+    
+    final void getCount(){
+        String w_id=this.wid.get(wname.indexOf(twid.getSelectedItem().toString()));
+        String p_id=this.pid.get(pname.indexOf(tpid.getSelectedItem().toString()));
+        lpqt.setText(ob.getCount(w_id,p_id));
+    }
+    
     public WareToShow() {
         initComponents();
         setLocationRelativeTo(null);
@@ -69,6 +74,7 @@ public class WareToShow extends javax.swing.JFrame {
         addShID();
         addWID();
         addPID();
+        getCount();
         //tpqt.setValue(10);
     }
 
@@ -91,7 +97,9 @@ public class WareToShow extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         tshid = new javax.swing.JComboBox<>();
         twid = new javax.swing.JComboBox<>();
-        tpqt = new javax.swing.JSpinner(model);
+        tpqt = new javax.swing.JTextField();
+        lpqt = new javax.swing.JLabel();
+        llabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(670, 300));
@@ -141,6 +149,14 @@ public class WareToShow extends javax.swing.JFrame {
 
         jLabel2.setText("Product ID :");
 
+        tpqt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tpqtMouseEntered(evt);
+            }
+        });
+
+        llabel.setText("Available :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,7 +185,11 @@ public class WareToShow extends javax.swing.JFrame {
                             .addComponent(tpid, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tshid, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(twid, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tpqt))
+                            .addComponent(tpqt)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(llabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lpqt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -180,7 +200,7 @@ public class WareToShow extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -193,6 +213,10 @@ public class WareToShow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(tpqt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lpqt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(llabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -207,7 +231,7 @@ public class WareToShow extends javax.swing.JFrame {
                     .addComponent(bsave)
                     .addComponent(bshow)
                     .addComponent(bclose))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -219,19 +243,36 @@ public class WareToShow extends javax.swing.JFrame {
     }//GEN-LAST:event_bcloseActionPerformed
 
     private void bsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsaveActionPerformed
-        String sh_id=this.shid.get(shname.indexOf(tshid.getSelectedItem().toString()));
-        String p_id=this.pid.get(pname.indexOf(tpid.getSelectedItem().toString()));
-        String p_qty=(String) tpqt.getValue();
-        String w_id=this.wid.get(wname.indexOf(twid.getSelectedItem().toString()));
+        String sh_name=tshid.getSelectedItem().toString();
+        String sh_id=this.shid.get(this.shname.indexOf(sh_name));
+        String p_name=tpid.getSelectedItem().toString();
+        String p_id=this.pid.get(pname.indexOf(p_name));
+        String p_qty=tpqt.getText();
+        String w_name=twid.getSelectedItem().toString();
+        String w_id=this.wid.get(wname.indexOf(w_name));
         SimpleDateFormat sd=new SimpleDateFormat("dd-MMM-yyyy");
         String ddate=sd.format(tdate.getDate());
-        ob.saveW2Sh(w_id,p_id,p_qty,sh_id,ddate);
-        ttable.setModel(DbUtils.resultSetToTableModel(ob.getW2Sh()));
+        String label1="Please Confirm: \nWarehouse: "+w_name+"\nProduct: "+p_name+"\nProduct Qty: "+p_qty+"\nShowroom: "+sh_name+"\nDisp. Date: "+ddate;
+        
+        if(Integer.parseInt(lpqt.getText())>Integer.parseInt(p_qty)) {
+            int input = JOptionPane.showConfirmDialog(null, label1);
+            if(input==0){
+                ob.saveW2Sh(w_id,p_id,p_qty,sh_id,ddate);
+                ttable.setModel(DbUtils.resultSetToTableModel(ob.getW2Sh()));
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Not Enough Stock Available !!","Error", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_bsaveActionPerformed
 
     private void bshowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bshowActionPerformed
         ttable.setModel(DbUtils.resultSetToTableModel(ob.getW2Sh()));
     }//GEN-LAST:event_bshowActionPerformed
+
+    private void tpqtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tpqtMouseEntered
+        getCount();
+    }//GEN-LAST:event_tpqtMouseEntered
 
     /**
      * @param args the command line arguments
@@ -279,9 +320,11 @@ public class WareToShow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel llabel;
+    private javax.swing.JLabel lpqt;
     private com.toedter.calendar.JDateChooser tdate;
     private javax.swing.JComboBox<String> tpid;
-    private javax.swing.JSpinner tpqt;
+    private javax.swing.JTextField tpqt;
     private javax.swing.JComboBox<String> tshid;
     private javax.swing.JTable ttable;
     private javax.swing.JComboBox<String> twid;

@@ -1,22 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ims;
 
 import ims.database.UsersDb;
 import net.proteanit.sql.DbUtils;
 
-/**
- *
- * @author LENOVO
- */
 public class Register extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Register
-     */
     UsersDb ob;
     public Register() {
         initComponents();
@@ -149,9 +137,6 @@ public class Register extends javax.swing.JFrame {
         new Login().setVisible(true);
     }//GEN-LAST:event_bregisterActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -176,7 +161,6 @@ public class Register extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Register().setVisible(true);

@@ -22,13 +22,13 @@ public class ShDb {
 	}
     }
     
-    public void saveShow(String sid,String sname,String sph,String email)
+    public void saveShow(String shid,String sname,String sph,String email)
     {
         String insert_sql="insert into showroom values(?,?,?,?)";
         try{
             
             ps=cn.prepareStatement(insert_sql);
-            ps.setString(1,sid);
+            ps.setString(1,shid);
             ps.setString(2,sname);
             ps.setString(3,sph);
             ps.setString(4,email);
@@ -58,13 +58,13 @@ public class ShDb {
 	}
     }
     
-    public void deleteShow(String sid)
+    public void deleteShow(String shid)
     {
         try
 	{
             String delete_sql="delete from showroom where sh_id=?";
             ps=cn.prepareStatement(delete_sql);
-            ps.setString(1,sid);
+            ps.setString(1,shid);
             ps.executeUpdate();
             cn.commit();
             JOptionPane.showMessageDialog(null, "Data Deleted !!","Success", JOptionPane.WARNING_MESSAGE);
@@ -76,13 +76,13 @@ public class ShDb {
 	}
     }
     
-    public void updateShow(String sid,String sname,String sph,String email)
+    public void updateShow(String shid,String sname,String sph,String email)
     {
     	try
     	{
             String update_sql="update showroom set name=?,ph_no=?,email=? where sh_id=?";
             ps=cn.prepareStatement(update_sql);
-            ps.setString(1,sid);
+            ps.setString(1,shid);
             ps.setString(2,sname);
             ps.setString(3,sph);
             ps.setString(4,email);

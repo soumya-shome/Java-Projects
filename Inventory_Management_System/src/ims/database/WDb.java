@@ -22,15 +22,15 @@ public class WDb {
 	}
     }
     
-    public void saveWare(String sid,String sname,String sph,String email)
+    public void saveWare(String wid,String wname,String wph,String email)
     {
         String insert_sql="insert into warehouse values(?,?,?,?)";
         try{
             
             ps=cn.prepareStatement(insert_sql);
-            ps.setString(1,sid);
-            ps.setString(2,sname);
-            ps.setString(3,sph);
+            ps.setString(1,wid);
+            ps.setString(2,wname);
+            ps.setString(3,wph);
             ps.setString(4,email);
             ps.executeUpdate();
             cn.commit();
@@ -58,13 +58,13 @@ public class WDb {
 	}
     }
     
-    public void deleteWare(String sid)
+    public void deleteWare(String wid)
     {
         try
 	{
             String delete_sql="delete from warehouse where w_id=?";
             ps=cn.prepareStatement(delete_sql);
-            ps.setString(1,sid);
+            ps.setString(1,wid);
             ps.executeUpdate();
             cn.commit();
             JOptionPane.showMessageDialog(null, "Data Deleted !!","Success", JOptionPane.WARNING_MESSAGE);
@@ -76,15 +76,15 @@ public class WDb {
 	}
     }
     
-    public void updateWare(String sid,String sname,String sph,String email)
+    public void updateWare(String wid,String wname,String wph,String email)
     {
     	try
     	{
             String update_sql="update warehouse set name=?,ph_no=?,email=? where w_id=?";
             ps=cn.prepareStatement(update_sql);
-            ps.setString(1,sid);
-            ps.setString(2,sname);
-            ps.setString(3,sph);
+            ps.setString(1,wid);
+            ps.setString(2,wname);
+            ps.setString(3,wph);
             ps.setString(4,email);
             ps.executeUpdate();
             cn.commit();

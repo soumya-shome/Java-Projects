@@ -9,8 +9,7 @@ public class UsersDb {
     Statement st=null;
     ResultSet rs=null;
     PreparedStatement ps=null;
-    public UsersDb()
-    {
+    public UsersDb(){
 	try
 	{
             Class.forName("oracle.jdbc.driver.OracleDriver");//REGISTER AND LOAD THE JDBC DRIVER
@@ -22,8 +21,20 @@ public class UsersDb {
 	}
     }
     
-    public boolean checkLogin(String username,String password)
-    {
+    private String getUserID(){
+        String sql="SELECT count(*) as c FROM USERS ;";
+        int c=1;
+        try{
+            st=this.cn.createStatement();//CREATE THE STATEMENT
+            rs=st.executeQuery(sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
+            c=Integer.parseInt(rs.getString("c"));
+        }catch(SQLException se){
+            se.printStackTrace();
+        }
+        return Integer.toString(10000+c);
+    }
+    
+    public boolean checkLogin(String username,String password){
         String sql="select * from users where username='"+username+"' and password='"+password+"'";
         boolean flag=false;
         try{
@@ -39,15 +50,16 @@ public class UsersDb {
     }
     
     public void register(String username,String password,String name,String phno,String email){
-        String insert_sql="insert into users values(?,?,?,?,?)";
+        String insert_sql="insert into users values(?,?,?,?,?,?)";
         try{
             
             ps=cn.prepareStatement(insert_sql);
-            ps.setString(1,username);
-            ps.setString(2,password);
-            ps.setString(3,name);
-            ps.setString(4,phno);
-            ps.setString(5,email);
+            ps.setString(1,"U"+getUserID());
+            ps.setString(2,username);
+            ps.setString(3,password);
+            ps.setString(4,name);
+            ps.setString(5,phno);
+            ps.setString(6,email);
             ps.executeUpdate();
             cn.commit();
             JOptionPane.showMessageDialog(null, "User Registered !!","Success", JOptionPane.WARNING_MESSAGE);

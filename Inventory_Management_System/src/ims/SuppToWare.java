@@ -1,5 +1,6 @@
 package ims;
 
+import ims.database.Details;
 import ims.database.SWShDb;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import net.proteanit.sql.DbUtils;
 public class SuppToWare extends javax.swing.JFrame {
 
     SWShDb ob;
+    Details obj;
     ResultSet rs=null;
     ArrayList<String> sid= new ArrayList<>();
     ArrayList<String> sname= new ArrayList<>();
@@ -20,7 +22,7 @@ public class SuppToWare extends javax.swing.JFrame {
     ArrayList<String> wname= new ArrayList<>();
     
     final void addSID() {
-        rs=ob.getSID();
+        rs=obj.getSID();
         try {
             while(rs.next()){
                 tsid.addItem(rs.getString("name"));
@@ -33,7 +35,7 @@ public class SuppToWare extends javax.swing.JFrame {
     }
     
     final void addWID() {
-        rs=ob.getWID();
+        rs=obj.getWID();
         try {
             while(rs.next()){
                 twid.addItem(rs.getString("name"));
@@ -46,7 +48,7 @@ public class SuppToWare extends javax.swing.JFrame {
     }
     
     final void addPID() {
-        rs=ob.getPID();
+        rs=obj.getPID();
         try {
             while(rs.next()){
                 tpid.addItem(rs.getString("name"));
@@ -62,6 +64,7 @@ public class SuppToWare extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         ob=new SWShDb();
+        obj=new Details();
         addSID();
         addWID();
         addPID();  

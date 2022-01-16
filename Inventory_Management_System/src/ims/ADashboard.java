@@ -31,6 +31,7 @@ public class ADashboard extends javax.swing.JFrame {
         bStW = new javax.swing.JButton();
         bWtSh = new javax.swing.JButton();
         bstock = new javax.swing.JButton();
+        bstock1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         MProduct = new javax.swing.JMenu();
         MSupplier = new javax.swing.JMenu();
@@ -56,10 +57,17 @@ public class ADashboard extends javax.swing.JFrame {
             }
         });
 
-        bstock.setText("Stock");
+        bstock.setText("Warehouse Stock");
         bstock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bstockActionPerformed(evt);
+            }
+        });
+
+        bstock1.setText("Showroom Stock");
+        bstock1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bstock1ActionPerformed(evt);
             }
         });
 
@@ -96,6 +104,11 @@ public class ADashboard extends javax.swing.JFrame {
         jMenuBar1.add(Showroom);
 
         close.setText("Close");
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(close);
 
         setJMenuBar(jMenuBar1);
@@ -110,7 +123,9 @@ public class ADashboard extends javax.swing.JFrame {
                     .addComponent(bstock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bStW, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bWtSh)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bWtSh)
+                    .addComponent(bstock1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,7 +136,9 @@ public class ADashboard extends javax.swing.JFrame {
                     .addComponent(bStW)
                     .addComponent(bWtSh))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bstock)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bstock)
+                    .addComponent(bstock1))
                 .addContainerGap(215, Short.MAX_VALUE))
         );
 
@@ -160,8 +177,18 @@ public class ADashboard extends javax.swing.JFrame {
 
     private void bstockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bstockActionPerformed
         dispose();
-        new Stock().setVisible(true);
+        new Stock(0).setVisible(true);
     }//GEN-LAST:event_bstockActionPerformed
+
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        dispose();
+        new Login().setVisible(true);
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void bstock1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bstock1ActionPerformed
+        dispose();
+        new Stock(1).setVisible(true);
+    }//GEN-LAST:event_bstock1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,6 +234,7 @@ public class ADashboard extends javax.swing.JFrame {
     private javax.swing.JButton bStW;
     private javax.swing.JButton bWtSh;
     private javax.swing.JButton bstock;
+    private javax.swing.JButton bstock1;
     private javax.swing.JMenu close;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables

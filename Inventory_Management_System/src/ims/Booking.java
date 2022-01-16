@@ -6,10 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 public class Booking extends javax.swing.JFrame {
 
+    String UserID;
+    
     ClientDb ob;
     Details obj;
     ResultSet rs=null;
@@ -17,19 +20,18 @@ public class Booking extends javax.swing.JFrame {
     ArrayList<String> shname= new ArrayList<>();
     ArrayList<String> pid= new ArrayList<>();
     ArrayList<String> pname= new ArrayList<>();
-    public Booking(){
+    public Booking(String id){
+        UserID=id;
         initComponents();
         setLocationRelativeTo(null);
         ob=new ClientDb();
         obj=new Details();
         addShID();
         addPID();
+        t_cid.setText(UserID);
     }
 
-    
-    
-    
-    final void addShID() {
+    final void addShID(){
         rs=obj.getShID();
         try {
             while(rs.next()){
@@ -42,7 +44,7 @@ public class Booking extends javax.swing.JFrame {
         }
     }
         
-    final void addPID() {
+    final void addPID(){
         rs=obj.getPID();
         try {
             while(rs.next()){
@@ -55,14 +57,20 @@ public class Booking extends javax.swing.JFrame {
         }
     }
     
-    public void refreshData()
-    {
+    final void getCount(){
+        String sh_id=this.shid.get(shname.indexOf(t_shid.getSelectedItem().toString()));
+        String p_id=this.pid.get(pname.indexOf(t_pid.getSelectedItem().toString()));
+        msg.setText(ob.getShCount(sh_id,p_id));
+    }
+    
+    public void refreshData(){
         t_pqt.setText("");
         t_cid.setText("");
         t_cname.setText("");
         t_cph.setText("");
         t_pqt.setText("");
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -87,10 +95,14 @@ public class Booking extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         t_date = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
+        msg = new javax.swing.JLabel();
+        llabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(670, 400));
+        setPreferredSize(new java.awt.Dimension(750, 400));
         setResizable(false);
+
+        t_cid.setEditable(false);
 
         bshow.setText("Show");
         bshow.addActionListener(new java.awt.event.ActionListener() {
@@ -102,11 +114,16 @@ public class Booking extends javax.swing.JFrame {
         jLabel6.setText("Quantity :");
 
         bclose.setText("Close");
+        bclose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bcloseActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Booking Details :");
 
-        jLabel1.setText("Client ID :");
+        jLabel1.setText("User ID :");
 
         jLabel2.setText("Name :");
 
@@ -134,9 +151,17 @@ public class Booking extends javax.swing.JFrame {
             }
         });
 
+        t_pqt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                t_pqtMouseEntered(evt);
+            }
+        });
+
         jLabel7.setText("Shop ID :");
 
         jLabel8.setText("Purchase Date :");
+
+        llabel.setText("Available :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,27 +180,31 @@ public class Booking extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bclose))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(t_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(t_cid)
-                                    .addComponent(t_cname)
-                                    .addComponent(t_cph)
-                                    .addComponent(t_shid, 0, 100, Short.MAX_VALUE)
-                                    .addComponent(t_pid, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(t_pqt))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(llabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(msg, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(t_date, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                                        .addComponent(t_cid)
+                                        .addComponent(t_cname)
+                                        .addComponent(t_cph)
+                                        .addComponent(t_pid, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(t_pqt, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(t_shid, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -203,50 +232,69 @@ public class Booking extends javax.swing.JFrame {
                             .addComponent(t_pid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(t_shid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(t_pqt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(t_shid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(llabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(msg, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(t_date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)))
+                            .addComponent(jLabel8))
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bbook)
+                            .addComponent(bshow)
+                            .addComponent(bclose))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bbook)
-                    .addComponent(bshow)
-                    .addComponent(bclose))
-                .addGap(34, 34, 34))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(63, 63, 63))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bbookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbookActionPerformed
-        String cid=t_cid.getText();
-        String cname=t_cname.getText();
-        String cph=t_cph.getText();
-        String pid=t_pid.getSelectedItem().toString();
-        String pqty=t_pqt.getText();
-        String shid=t_shid.getSelectedItem().toString();
-        SimpleDateFormat sd=new SimpleDateFormat("dd-MMM-yyyy");
-        String tdate=sd.format(t_date.getDate());
-        ob.saveBook(cid,cname,cph,pid,pqty,shid,tdate);
-        ttable.setModel(DbUtils.resultSetToTableModel(ob.getData()));
+        if(Integer.parseInt(t_pqt.getText())<=Integer.parseInt(msg.getText()))
+        {
+            String uid=t_cid.getText();
+            String uname=t_cname.getText();
+            String uph=t_cph.getText();
+            String pid=this.pid.get(pname.indexOf((t_pid.getSelectedItem().toString())));
+            String pqty=t_pqt.getText();
+            String shid=this.shid.get(shname.indexOf((t_shid.getSelectedItem().toString())));
+            SimpleDateFormat sd=new SimpleDateFormat("dd-MMM-yyyy");
+            String tdate=sd.format(t_date.getDate());
+            ob.saveBook(uid,uname,uph,pid,pqty,shid,tdate);
+            ttable.setModel(DbUtils.resultSetToTableModel(ob.getData(UserID)));
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Not Enough Stock Available !!","Error", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_bbookActionPerformed
 
     private void bshowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bshowActionPerformed
-        ttable.setModel(DbUtils.resultSetToTableModel(ob.getData()));
+        ttable.setModel(DbUtils.resultSetToTableModel(ob.getData(UserID)));
     }//GEN-LAST:event_bshowActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void bcloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcloseActionPerformed
+        dispose();
+        new CDashboard(UserID).setVisible(true);
+    }//GEN-LAST:event_bcloseActionPerformed
+
+    private void t_pqtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_pqtMouseEntered
+        getCount();
+    }//GEN-LAST:event_t_pqtMouseEntered
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -274,7 +322,7 @@ public class Booking extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Booking().setVisible(true);
+                new Booking("").setVisible(true);
             }
         });
     }
@@ -292,6 +340,8 @@ public class Booking extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel llabel;
+    private javax.swing.JLabel msg;
     private javax.swing.JTextField t_cid;
     private javax.swing.JTextField t_cname;
     private javax.swing.JTextField t_cph;

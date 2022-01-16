@@ -7,16 +7,17 @@ import net.proteanit.sql.DbUtils;
 public class Stock extends javax.swing.JFrame {
 
     StockDb ob;
-    ResultSet rs=null;
-    public Stock() {
+    int id=0;//0 for Warehouse 1 for Showroom
+    public Stock(int id) {
         initComponents();
         setLocationRelativeTo(null);
         ob=new StockDb();
+        this.id=id;
         Show();
     }
 
     final void Show(){
-        ttable.setModel(DbUtils.resultSetToTableModel(ob.getStock()));
+        ttable.setModel(DbUtils.resultSetToTableModel(ob.getStock(id)));
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -125,7 +126,7 @@ public class Stock extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Stock().setVisible(true);
+                new Stock(0).setVisible(true);
             }
         });
     }

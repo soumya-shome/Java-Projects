@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ims.database;
 
 import java.sql.Connection;
@@ -13,10 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author LENOVO
- */
 public class StockDb {
     Connection cn=null;
     Statement st=null;
@@ -33,11 +24,16 @@ public class StockDb {
 	}
     }
     
-    public ResultSet getStock()
-      {
+    public ResultSet getStock(int id)
+    {
+        String select_sql="";
+        if(id==0)
+            select_sql="select * from wstock order by w_id";
+        else if(id==1)
+            select_sql="select * from shstock order by sh_id";
+         
         try
         {
-            String select_sql="select * from wstock";
             st=cn.createStatement();//CREATE THE STATEMENT
             rs=st.executeQuery(select_sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
             return rs;

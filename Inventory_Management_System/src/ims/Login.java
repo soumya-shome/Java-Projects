@@ -106,13 +106,13 @@ public class Login extends javax.swing.JFrame {
         UsersDb ob=new UsersDb();
         String username=tf_usrname.getText();
         String password=tf_pwd.getText();
-        boolean ch=ob.checkLogin(username, password);
-        if(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin")){
+        String ch=ob.checkLogin(username, password);
+        if(ch.equalsIgnoreCase("U10000")){
             dispose();
             new ADashboard().setVisible(true);
-        }else if(ch) {
+        }else if(!"".equals(ch)) {
             dispose();
-            new CDashboard().setVisible(true);
+            new CDashboard(ch).setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "You are not a Registered User  !!!!","Error", JOptionPane.WARNING_MESSAGE);
         }

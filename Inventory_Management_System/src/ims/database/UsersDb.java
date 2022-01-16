@@ -22,11 +22,12 @@ public class UsersDb {
     }
     
     private String getUserID(){
-        String sql="SELECT count(*) as c FROM USERS ;";
+        String sql="SELECT count(*) as c FROM USERS ";
         int c=1;
         try{
             st=this.cn.createStatement();//CREATE THE STATEMENT
             rs=st.executeQuery(sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
+            rs.next();
             c=Integer.parseInt(rs.getString("c"));
         }catch(SQLException se){
             se.printStackTrace();
@@ -34,19 +35,18 @@ public class UsersDb {
         return Integer.toString(10000+c);
     }
     
-    public boolean checkLogin(String username,String password){
+    public String checkLogin(String username,String password){
         String sql="select * from users where username='"+username+"' and password='"+password+"'";
-        boolean flag=false;
+        String uid="";
         try{
             st=this.cn.createStatement();//CREATE THE STATEMENT
             rs=st.executeQuery(sql);//EXECUTE THE QUERY AND RETRIEVE DATA INTO RESULTSET
-            if(rs.next()){
-                flag=true;
-            }
+            rs.next();
+            uid=rs.getString("u_id");
         }catch(SQLException se){
             se.printStackTrace();
         }
-        return flag;
+        return uid;
     }
     
     public void register(String username,String password,String name,String phno,String email){

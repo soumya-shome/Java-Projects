@@ -40,6 +40,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Close"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="closeMouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>
@@ -76,7 +79,10 @@
                   <Component id="bStW" pref="153" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="bWtSh" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="bWtSh" min="-2" max="-2" attributes="0"/>
+                  <Component id="bstock1" min="-2" pref="153" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="209" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -90,7 +96,10 @@
                   <Component id="bWtSh" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="bstock" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="bstock" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bstock1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="215" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -115,10 +124,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="bstock">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Stock"/>
+        <Property name="text" type="java.lang.String" value="Warehouse Stock"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bstockActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="bstock1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Showroom Stock"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bstock1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -8,8 +8,7 @@ public class SWShDb {
     Statement st=null;
     ResultSet rs=null;
     PreparedStatement ps=null;
-    public SWShDb()
-    {
+    public SWShDb(){
 	try
 	{
             Class.forName("oracle.jdbc.driver.OracleDriver");//REGISTER AND LOAD THE JDBC DRIVER
@@ -19,8 +18,7 @@ public class SWShDb {
 	}
     }
      
-    public ResultSet getS2W()
-    {
+    public ResultSet getS2W(){
         try
         {
             String select_sql="select * from stow order by r_date";
@@ -34,8 +32,7 @@ public class SWShDb {
 	}
     }
     
-    public ResultSet getW2Sh()
-    {
+    public ResultSet getW2Sh(){
         try
         {
             String select_sql="select * from wtosh order by d_date";
@@ -49,16 +46,15 @@ public class SWShDb {
 	}
     }
     
-    public void saveS2W(String sid,String pid,String pqty,String wid,String rdate)
-    {
+    public void saveS2W(String sid,String pid,String pqty,String wid,String rdate){
         String insert_sql="insert into stow values(?,?,?,?,?)";
         try{
-            if(this.checkStock(wid,pid)){
+            if(this.checkWStock(wid,pid)){
                 this.updateWStock(pqty,wid,pid,0);
             }
             else
             {
-                this.addStock(wid,pid,pqty);
+                this.addWStock(wid,pid,pqty);
             }
             ps=cn.prepareStatement(insert_sql);
             ps.setString(1,sid);
@@ -74,12 +70,19 @@ public class SWShDb {
         }
     }
      
-    public void saveW2Sh(String wid,String pid,String pqty,String shid,String ddate)
-    {
+    public void saveW2Sh(String wid,String pid,String pqty,String shid,String ddate){
         String insert_sql="insert into wtosh values(?,?,?,?,?)";
         try{
-            if(this.checkStock(wid,pid)){
+            if(this.checkWStock(wid,pid)){
                 this.updateWStock(pqty,wid,pid,1);
+            }
+            
+            if(this.checkShStock(shid,pid)){
+                this.updateShStock(pqty,shid,pid,0);
+            }
+            else
+            {
+                this.addShStock(shid,pid,pqty);
             }
             ps=cn.prepareStatement(insert_sql);
             ps.setString(1,wid);
@@ -96,8 +99,7 @@ public class SWShDb {
         }
     }
     
-    public void updateWStock(String qty,String wid,String pid,int ch)
-    {
+    public void updateWStock(String qty,String wid,String pid,int ch){
         
         String insert_sql="";
         if(ch==0)
@@ -115,9 +117,8 @@ public class SWShDb {
             System.out.println("Update Error");
         }
     }
-    
-    public void addStock(String wid,String pid,String pqty)
-    {
+        
+    public void addWStock(String wid,String pid,String pqty){
         String insert_sql="insert into wstock values(?,?,?)";
         try{
             ps=cn.prepareStatement(insert_sql);
@@ -131,8 +132,7 @@ public class SWShDb {
         }
     }
     
-    public boolean checkStock(String wid,String pid)
-    {
+    public boolean checkWStock(String wid,String pid){
         try
         {
             String select_sql="select count(*) as count from wstock where w_id=? and p_id=?";
@@ -153,13 +153,85 @@ public class SWShDb {
         return false;
     }
     
-    public String getCount(String wid,String pid)
-    {
+    public String getWCount(String wid,String pid){
         try
         {
             String select_sql="select qty from wstock where w_id=? and p_id=?";
             ps=cn.prepareStatement(select_sql);
             ps.setString(1,wid);
+            ps.setString(2,pid);
+            rs=ps.executeQuery();
+            String count="0";
+            while(rs.next())
+                count=rs.getString("qty");
+            //System.out.println(count);
+            return count;
+        }catch(SQLException se){
+            System.out.println("ERROR");
+            return "0";
+        }
+    }
+    
+    public void updateShStock(String qty,String shid,String pid,int ch){
+        
+        String insert_sql="";
+        if(ch==0)
+            insert_sql="update shstock set qty=qty+to_number(?) where sh_id=? and p_id=?";
+        else if(ch==1)
+            insert_sql="update shstock set qty=qty-to_number(?) where sh_id=? and p_id=?";
+        try{
+            ps=cn.prepareStatement(insert_sql);
+            ps.setString(1,qty);
+            ps.setString(2,shid);
+            ps.setString(3,pid);
+            ps.executeUpdate();
+            cn.commit();
+        }catch(SQLException se){
+            System.out.println("Update Error");
+        }
+    }
+    
+    public void addShStock(String shid,String pid,String pqty){
+        String insert_sql="insert into shstock values(?,?,?)";
+        try{
+            ps=cn.prepareStatement(insert_sql);
+            ps.setString(1,shid);
+            ps.setString(2,pid);
+            ps.setString(3,pqty);
+            ps.executeUpdate();
+            cn.commit();
+        }catch(SQLException se){
+            System.out.println("Add Error");
+        }
+    }
+    
+    public boolean checkShStock(String shid,String pid){
+        try
+        {
+            String select_sql="select count(*) as count from shstock where sh_id=? and p_id=?";
+            ps=cn.prepareStatement(select_sql);
+            ps.setString(1,shid);
+            ps.setString(2,pid);
+            rs=ps.executeQuery();
+            int count=0;
+            while(rs.next())
+                count=Integer.parseInt(rs.getString("count"));
+            System.out.println(count);
+            if(count != 0)
+                return true;
+        }catch(SQLException se){
+            System.out.println("ERROR");
+            return false;
+        }
+        return false;
+    }
+    
+    public String getShCount(String shid,String pid){
+        try
+        {
+            String select_sql="select qty from wstock where sh_id=? and p_id=?";
+            ps=cn.prepareStatement(select_sql);
+            ps.setString(1,shid);
             ps.setString(2,pid);
             rs=ps.executeQuery();
             String count="0";

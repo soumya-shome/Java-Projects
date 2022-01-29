@@ -1,4 +1,5 @@
 package rideara.view;
+import javax.swing.JOptionPane;
 import rideara.controller.User;
 import rideara.controller.controller;
 
@@ -169,6 +170,7 @@ public class Login extends javax.swing.JFrame {
             works.setVisible(true);
             
         } else {
+            JOptionPane.showMessageDialog(null, "You are not a Registered User  !!!!","Error", JOptionPane.WARNING_MESSAGE);
             System.err.println("Authentication Denied!");
         }
     }//GEN-LAST:event_loginActionPerformed

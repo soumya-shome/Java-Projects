@@ -95,16 +95,13 @@ public class DB {
             Statement st = this.conn.createStatement();
             ResultSet resultSet = st.executeQuery(query);
             int size=GetSize();
-            System.out.println(size);
             Station stat=null;
             if(size>0){
                 stat=new Station();
                 stat.setSi(size);
                 while(resultSet.next()){
                     stat.setStation(resultSet.getString("name"));
-                    stat.setSID(resultSet.getString("b_id"));
-                    stat.setCapacity(resultSet.getInt("capacity"));
-                    stat.setAvail(resultSet.getInt("bike_avail"));
+                    stat.setSID(resultSet.getString("s_id"));
                     stat.incre();
                 }
             }
@@ -115,6 +112,19 @@ public class DB {
         }catch(SQLException ex){
             System.out.println("Here");
              return null;
+        }
+    }
+    
+    public boolean setRide(String usern,String p,String d,String pt){
+        try{
+            String q="INSERT INTO `rides` (`username`, `pick`, `dest`, `b_time`, `p_time`, `d_time`, `tot_time`, `tot_fare`, `status`) VALUES ('"+usern+"', '"+p+"', '"+d+"', '"+pt+"', '', '', '', '', 'Booked');";
+            System.out.println(q);
+            Statement st = this.conn.createStatement();
+            st.executeUpdate(q);
+            st.close();            
+            return true;
+        }catch(SQLException ex){
+             return false;
         }
     }
 } 

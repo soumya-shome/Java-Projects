@@ -32,4 +32,8 @@ public class controller {
     public Station Stations(){
         return this.db.getStation();
     }
+    
+    public boolean setRide(String usern,String p,String d,String tim){
+        return this.db.setRide(usern, p, d, tim);
+    }
 }

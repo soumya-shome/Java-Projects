@@ -1,0 +1,6 @@
+Number = xy..z
+
+if x is not 0 
+and if any digit of the number is 0
+
+it is a duck number

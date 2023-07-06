@@ -1,0 +1,1 @@
+Armstrong number is a number which is equal to the sum of digits raise to the power total number of digits in the number.

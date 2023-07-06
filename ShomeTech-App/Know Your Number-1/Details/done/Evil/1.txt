@@ -1,0 +1,1 @@
+An Evil number is a positive whole number which has even number of 1’s in its binary equivalent.

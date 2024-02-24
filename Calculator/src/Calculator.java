@@ -377,6 +377,7 @@ public class Calculator extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void InputNumbers(String n){
